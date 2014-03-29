@@ -11,15 +11,16 @@ $(function() {
   var width = $("#viz").width(),
       height = $("#viz").height();
 
-  randLog = d3.random.logNormal(3.4, .5)
+  randLog = d3.random.logNormal(2.2, .5)
 
   function generateData() {
-    var nodes = d3.range(75).map(function(e, i) { 
-      radius = Math.min(randLog(), 80);
+    var nodes = d3.range(90).map(function(e, i) { 
+      radius = Math.min(randLog(), 60);
       return {
         radius: radius,
-        offset: radius > 25 ? getRandomInt(-15, -10) : getRandomInt(0, 5), //getRandomElement([-10, -15]) : getRandomElement([0, 5]),
-        color: color_scale(i % 4)
+        offset: 5,//radius > 10 ? getRandomInt(-15, -10) : getRandomInt(0, 5), //getRandomElement([-10, -15]) : getRandomElement([0, 5]),
+        //color: color_scale(i % 4)
+        color: 'black'
       };
     });
     return nodes;
@@ -27,10 +28,10 @@ $(function() {
   
   function animate(nodes) {
     var root = nodes[0];
-    root.radius = 30;
+    root.radius = 5;
     root.fixed = true;
-    root.x = width + (width / 100.0);
-    root.y = height + (height / 100.0);
+    root.x = width / 2;
+    root.y = height / 2;
 
     var force = d3.layout.force()
         .gravity(0.007)
@@ -41,10 +42,10 @@ $(function() {
         .size([width * 1.5, height * 1.5]);
 
     setTimeout(function() {
-      $(".node").fadeIn(1000);
+      $(".node").fadeIn(10);
       force.start();
       force.alpha(heat_scale(root.x));
-    }, 1000);
+    }, 10);
 
     var svg = d3.select("#viz").append("svg");
 
@@ -70,7 +71,10 @@ $(function() {
     });
 
     force.on("end", function(e) {
-
+      force.alpha(.020);
+      setInterval(function() {
+        force.alpha(.020);
+      }, 1000);
     });
   }
 
