@@ -14,7 +14,7 @@ $(function() {
   randLog = d3.random.logNormal(2.2, .5)
 
   function generateData() {
-    var nodes = d3.range(200).map(function(e, i) { 
+    var nodes = d3.range(150).map(function(e, i) { 
       radius = Math.min(randLog(), 35);
       return {
         radius: radius,
@@ -28,7 +28,7 @@ $(function() {
   
   function animate(nodes) {
     var root = nodes[0];
-    root.radius = 60;
+    root.radius = 40;
     root.fixed = true;
     root.x = width / 2;
     root.y = height / 2;
@@ -74,7 +74,8 @@ $(function() {
       force.alpha(.040);
       setInterval(function() {
         force.alpha(.040);
-      }, 500);
+        //root.radius += 1;
+      }, 1000);
     });
   }
 
